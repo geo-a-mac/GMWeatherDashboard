@@ -1,18 +1,17 @@
 var citySearch = document.getElementById("city");
 var searchButton = document.getElementById("searchBtn");
+var searchList = document.querySelector("#searchList");
 var APIKey = "80ef5c6717f3834714ead7f302cc767c";
+var searchHist = [];
 
 var getCity = function() {
   var searchCity = citySearch.value;
   searchCity.trim();
-  console.log(searchCity);
   getWeather(searchCity);
 }
 
 var getWeather = function(searchCity) {
-    // format the github api url
-    //var apiUrl = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + searchCity + "&cnt=5&APPID=80ef5c6717f3834714ead7f302cc767c";
-    //var apiUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?q=Chicago&cnt=5&APPID=80ef5c6717f3834714ead7f302cc767c";
+    // format the openweather api url
     var apiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchCity + "&units=imperial&appid=80ef5c6717f3834714ead7f302cc767c";
     
     // make a get request to url
@@ -51,17 +50,32 @@ var getWeather = function(searchCity) {
   }
 
   var storeSearch = function(searchCity) {
-    /* store in localstorage */
-    const searchHist = {
-      cityName: searchCity
-    };
-    window.localStorage.setItem("city", JSON.stringify(searchHist));
+    /* add searchCity to searchHist array */
+    searchHist.push(searchCity);
+    // stor in localStorage
+    localStorage.setItem("history", JSON.stringify(searchHist));
+    getPreviousSearches();
   }
 
   var getPreviousSearches = function() {
+    while(searchList.firstChild) searchList.removeChild(searchList.firstChild);
+
     /* get previous searches from local storage and display under search input */
-    var prevSearch = JSON.parse(window.localStorage.getItem("city"));
-    console.log("previous: " + prevSearch);
+    searchHist = JSON.parse(localStorage.getItem("history"));
+    if (searchHist.length === 0) {
+      return;
+    } else {
+      for (var i=0; i<searchHist.length; i++) {
+          console.log(searchHist[i]);
+          var listEl = document.createElement("li");
+          //listEl.classList = "list-item flex-row justify-space-between align-center";
+          listEl.setAttribute("data", [i]);
+          var titleEl = document.createElement("span");
+          titleEl.textContent = searchHist[i];
+          listEl.appendChild(titleEl);
+          searchList.appendChild(listEl);
+      }
+    }
   }
   
   var convertDate = function(date) {
