@@ -53,7 +53,7 @@ var getCity = function() {
 
 var getWeather = function(searchCity) {
   // format the openweather api url
-  var apiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchCity + "&units=imperial&appid=80ef5c6717f3834714ead7f302cc767c";
+  var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchCity + "&units=imperial&appid=80ef5c6717f3834714ead7f302cc767c";
   
   // make a get request to url
   fetch(apiUrl)
