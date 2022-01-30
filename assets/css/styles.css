@@ -67,13 +67,15 @@
 }
 .detailDisplay {
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 20% 20% 20% 20% 20%;
 }
 .detailDisplay .box {
     background: lightblue;
     justify-content: space-between;
     margin: 2px;
     border: 1px solid black;
+    font-size: 16px;
+    height: 200px;
 }
 
 @media screen and (max-width: 560px) {
