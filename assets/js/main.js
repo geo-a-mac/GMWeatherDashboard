@@ -30,11 +30,8 @@ var wind5 = document.getElementById("wind5");
 var hum5 = document.getElementById("hum5");
 
 var histSearch = function (event) {
-  console.log("histSearch");
-  //debugger;
   var element = event.target;
   if(element.matches(".histBtn")) {
-    console.log("it's a .histBtn");
     var searchCity = element.textContent;
     getWeather(searchCity);
   }
@@ -60,9 +57,7 @@ var getWeather = function(searchCity) {
     .then(function(response) {
       // request was successful
       if (response.ok) {
-        console.log(response);
-        response.json().then(function(data) {
-          console.log(data);
+          response.json().then(function(data) {
           displayWeather(data);
           storeSearch(searchCity);
         });
@@ -77,7 +72,6 @@ var getWeather = function(searchCity) {
 
   var displayWeather = function(data) {
     /* display the weather and forecast for searchCity */
-    console.log(data.city.name);
     var cName = data.city.name;
     for (var i=0; i<data.cnt; i+=8) {
       var dttm = convertDate(data.list[i].dt);
@@ -85,7 +79,6 @@ var getWeather = function(searchCity) {
       var descr = data.list[i].weather[0].main;
       var wind = data.list[i].wind.speed;
       var humid = data.list[i].main.humidity;
-          console.log(dttm + ',' + temp + ',' + descr + ',' + wind + ',' + humid);
       if (i === 0) {
         cityDate.textContent = cName + " " + dttm + " " + descr;
         todayTemp.textContent = "Temperature: " + temp + "F";
@@ -146,7 +139,6 @@ var getWeather = function(searchCity) {
     } else {
       searchHist = tempArr;
       for (var i=1; i<searchHist.length; i++) {
-          console.log(searchHist[i]);
           var listEl = document.createElement("button");
           listEl.classList = "histBtn";
           listEl.setAttribute("id", "histBtn");
