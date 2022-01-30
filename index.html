@@ -10,29 +10,35 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
-    <div class="row min-vh-100 no-gutters">
-        <section class="col-12 col-lg-3 bg-light text-dark sticky-top d-flex flex-column p-4 p-lg-3">
-          <h1 class="text-center">Search for a city</h1>
+  <header class="header">Weather Dashboard</header>
+  <div class="wrapper">
+    <div class="side">
+      <section class="searchbox">
+        <h2 class="text-center">Search for a city</h1>
           <input type="text" id="city" name="city" placeholder="city">
-          <button id="searchBtn" class="btn btn-block btn-success">Search</button>
-          <ul id="searchList">
+          <button id="searchBtn" class="button">Search</button>
+      </section>
+      <section class="resultbox">
+        <div id="searchList">
 
-          </ul>
-        </section>
-        <section class="col-12 col-lg-9 d-flex flex-column">
-          <div class="m-5 row justify-content-around">
-            <!-- to do start -->
-            <div class="col-12 col-md-6 col-xl-3 mb-3">
-              <div class="card">
-                <h4 class="card-header bg-dark text-light">
-                  To Do
-                </h4>
-                <ul id="list-toDo" class="list-group list-group-flush">
-                </ul>
-              </div>
-            </div>
-            <!-- to do end -->
-          <script src="./assets/js/main.js"></script>
-          </body>
+        </div>
+      </section>  
+    </div>
+    <div class="mainDisplay">
+    <div class="today">
+      <h2>Today's weather</h2>
+    
+    </div>
+    <div class="detailDisplay">
+      <div class="box">One</div>
+      <div class="box">One</div>
+      <div class="box">One</div>
+      <div class="box">One</div>
+    </div>
+   
+
+      <script src="./assets/js/main.js"></script>
+  </div>
+</body>
 
 </html>

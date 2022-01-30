@@ -2,12 +2,28 @@ var citySearch = document.getElementById("city");
 var searchButton = document.getElementById("searchBtn");
 var searchList = document.querySelector("#searchList");
 var APIKey = "80ef5c6717f3834714ead7f302cc767c";
-var searchHist = [];
+var searchHist = ["No previous search"];
+
+var histSearch = function (event) {
+  console.log("histSearch");
+  //debugger;
+  var element = event.target;
+  if(element.matches(".histBtn")) {
+    console.log("it's a .histBtn");
+    var searchCity = element.textContent;
+    getWeather(searchCity);
+  }
+}
 
 var getCity = function() {
-  var searchCity = citySearch.value;
-  searchCity.trim();
-  getWeather(searchCity);
+  if (citySearch.value === '') {
+    return;
+  } else {
+    searchCity = citySearch.value;
+    searchCity.trim(); 
+    getWeather(searchCity);
+    citySearch.value = '';
+  }
 }
 
 var getWeather = function(searchCity) {
@@ -51,28 +67,32 @@ var getWeather = function(searchCity) {
 
   var storeSearch = function(searchCity) {
     /* add searchCity to searchHist array */
-    searchHist.push(searchCity);
-    // stor in localStorage
-    localStorage.setItem("history", JSON.stringify(searchHist));
-    getPreviousSearches();
+    if (searchHist.includes(searchCity)) {
+      return;
+    } else {
+      searchHist.push(searchCity);
+      // store in localStorage
+      localStorage.setItem("history", JSON.stringify(searchHist));
+      getPreviousSearches();
+    }
   }
 
   var getPreviousSearches = function() {
     while(searchList.firstChild) searchList.removeChild(searchList.firstChild);
 
     /* get previous searches from local storage and display under search input */
-    searchHist = JSON.parse(localStorage.getItem("history"));
-    if (searchHist.length === 0) {
+    var tempArr = JSON.parse(localStorage.getItem("history"));
+    if (!tempArr) {
       return;
     } else {
-      for (var i=0; i<searchHist.length; i++) {
+      searchHist = tempArr;
+      for (var i=1; i<searchHist.length; i++) {
           console.log(searchHist[i]);
-          var listEl = document.createElement("li");
-          //listEl.classList = "list-item flex-row justify-space-between align-center";
-          listEl.setAttribute("data", [i]);
-          var titleEl = document.createElement("span");
-          titleEl.textContent = searchHist[i];
-          listEl.appendChild(titleEl);
+          var listEl = document.createElement("button");
+          listEl.classList = "histBtn";
+          listEl.setAttribute("id", "histBtn");
+          listEl.setAttribute("data", searchHist[i]);
+          listEl.textContent = searchHist[i];
           searchList.appendChild(listEl);
       }
     }
@@ -93,3 +113,4 @@ var getWeather = function(searchCity) {
   
   getPreviousSearches();
   searchButton.addEventListener("click", getCity);
+  searchList.addEventListener("click", histSearch);
